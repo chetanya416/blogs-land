@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogs-Land</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <%- include("partials/header.ejs") %>
+     <main>
+
+    <section>
+        <h2>Write your own Blog ✨</h2>
+        <form action="/blog-action" method="POST">
+            <!-- Hidden field to know which blog this is -->
+             <input type="hidden" name="blogId" value="<%= blogToEdit ? blogToEdit.id : '' %>">
+
+    <input
+        type="text"
+        name="title"
+        placeholder="Heading"
+        value="<%= blogToEdit ? blogToEdit.title : '' %>"
+        required
+    >
+
+    <textarea
+        name="content"
+        rows="6"
+        placeholder="Write here ..."
+    ><%= blogToEdit ? blogToEdit.content : '' %></textarea>
+
+    <div class="form-buttons">
+        <button type="submit" name="action" value="post">Post</button>
+        <button type="submit" name="action" value="edit">Edit</button>
+        <button type="submit" name="action" value="delete">Delete</button>
+    </div>
+        </form>
+    </section>
+
+    <hr>
+
+    <section>
+        <h3>My Blogs ✨</h3>
+
+<ul>
+    <% if (myBlogs.length === 0) { %>
+        <li>No blogs yet.</li>
+    <% } %>
+
+    <% myBlogs.forEach(blog => { %>
+        <li>
+            <a href="/blog/<%= blog.id %>"><%= blog.title %></a>
+        </li>
+    <% }) %>
+</ul>
+    </section>
+
+</main>
+<%- include("partials/footer.ejs") %>
+</body>
+</html>
